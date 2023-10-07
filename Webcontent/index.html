@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="jsFiles/jquery.js"></script>
+	<script src="jsFiles/index.js"></script>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="bootstrap/js/bootstrap.min.js">
+	<link rel="stylesheet" href="css/loginPage.css">
+	<link rel="stylesheet" href="css/homepage.css">
+</head>
+
+<body>
+	<!--Login page -->
+	<div id="login-page">
+		<form id="login-form">
+			<h1 id="login-heading">LOGIN</h1>
+			<label class="login-page-labels">Username</label>
+			<input class="login-page-input" type="email" id="username">
+			<label class="login-page-labels">Password</label>
+			<input class="login-page-input" type="password" id="password">
+			<button type='button' id="login-page-submit-button"><span id="login-page-submit-span">Submit</span></button>
+		</form>
+	</div>
+
+	<!--homepage -->
+	<div id="homepage">
+		<div class="container">
+			<div class="row">
+				<!--homepage menu -->
+				<div class="col-lg-2">
+					<div class="homepage-menu-icon" id="order-master-menu-button">
+						<img src="images/bell.png" class="homepage-menu-icon-img">
+						<h1>ORDER</h1>
+					</div>
+
+					<div class="homepage-menu-icon" id="item-master-menu-button">
+						<img src="images/add-to-playlist.png" class="homepage-menu-icon-img">
+						<h1>ITEM MASTER</h1>
+					</div>
+
+					<div class="homepage-menu-icon">
+						<img src="images/teamwork.png" class="homepage-menu-icon-img">
+						<h1>EMPLOYE</h1>
+					</div>
+
+					<div class="homepage-menu-icon">
+						<img src="images/medical-report.png" class="homepage-menu-icon-img">
+						<h1>REPORT</h1>
+					</div>
+				</div>
+
+				<div class="col-lg-10">
+					<div class="whitebox">
+						<div class="container">
+							<!--order master section-->
+							<div class="row" id="order-master-section">
+								<div class="col-lg-8">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="row">
+												<div class="col-lg-10">
+													<input class="homepage-input" type="text">
+												</div>
+											</div>
+										</div>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+
+										<div class="col-lg-4 col-md-4">
+											<div class="home-page-box">
+												<h2>Fresh Juice</h2>
+											</div>
+
+											<div class="home-page-box">
+												<h2>Veg Snacks</h2>
+											</div>
+
+											<div class="home-page-box">
+												<h2>Milkshake</h2>
+											</div>
+										</div>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+
+										<div class="col-lg-4 col-md-4">
+											<div class="home-page-box">
+												<h2>Spcial Drink</h2>
+											</div>
+
+											<div class="home-page-box">
+												<h2>Non-veg Snacks</h2>
+											</div>
+
+											<div class="home-page-box">
+												<h2>Hot Drink</h2>
+											</div>
+										</div>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<br>
+										<div class="col-lg-4 col-md-4">
+											<div class="home-page-box">
+												<h2>Milkshake</h2>
+											</div>
+											<div class="home-page-box">
+												<h2>Falooda</h2>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-4">
+									<div class="box1">
+										<h3>YOU & I<br>JUICE AND SANCKS</h3>
+										<table style="width:100%">
+											<tr>
+												<th>ITEM</th>
+												<th>QTY</th>
+												<th>PRICE</th>
+												<th>AMOUNT</th>
+											</tr>
+											<tr>
+												<td>Jill</td>
+												<td>Smith</td>
+												<td>50</td>
+											</tr>
+											<tr>
+												<td>Eve</td>
+												<td>Jackson</td>
+												<td>94</td>
+											</tr>
+											<tr>
+												<td>John</td>
+												<td>Doe</td>
+												<td>80</td>
+											</tr>
+										</table>
+										<br>
+										<h4>Grand total</h4>
+										<p>CGST(6%)</p>
+										<p>SGCT(6%)</P>
+										<button>
+											<h5>Print</h5>
+										</button>
+									</div>
+								</div>
+								<br>
+								<br>
+								<br>
+								<br>
+							</div>
+
+
+							<!--Item Master section -->
+							<div class="row" id="item-master-section">
+
+
+								<!--Item and Category menu-->
+								<div class="col-lg-4 col-md-4">
+									<form>
+										<br>
+										<label class="item-master-label">ITEM</label>
+
+										<input type="text" id="item-search-bar" class="item-master-input" list="search-bar-items"
+											placeholder="Enter item"/>
+										<datalist id="search-bar-items" >
+										</datalist>
+										
+									</form>
+								</div>
+
+								<div class="col-lg-2 col-md-2">
+									<br>
+									<button class="item-master-button" id="item-master-add-item-button">
+										<span class="item-add-span">Add</span>
+									</button>
+								</div>
+								<div class="col-lg-4 col-md-4">
+									<form>
+										<br>
+										<label class="item-master-label">CATEGORY</label>
+										<input type="text" id="category-search-bar" class="item-master-input" list="search-bar-categories"
+											placeholder="Enter category" />
+										<datalist id="search-bar-categories">
+										</datalist>
+									</form>
+								</div>
+								<div class="col-lg-2 col-md-2">
+									<br>
+									<button class="item-master-button" id="item-master-add-category-button"><span
+											class="item-add-span">Add</span></button>
+								</div>
+
+								<!--Add item -->
+								<div class="col-lg-6 col-md-6" id="add-item-container">
+									<div class="item-box">
+										<div class="item-box-label">
+											<h1>ITEM ADD
+												<img src="images/close icon.png" class="item-master-close-option">
+											</h1>
+
+										</div>
+										<div class="container">
+											<div class="row">
+
+												<div class="col-lg-6">
+
+													<form>
+														<br>
+														<label class="item-master-label">Item name</label>
+
+														<input class="item-master-input" id="add-item-name">
+													</form>
+												</div>
+												<div class="col-lg-6">
+													<form>
+														<br>
+														<label class="item-master-label">Category</label>
+														<select id="add-item-category-list" class="item-master-input">
+														</select>
+													</form>
+												</div>
+												<div class="col-lg-6">
+													<form>
+														<br>
+														<label class="item-master-label">Item code</label>
+
+														<input class="item-master-input" id="add-item-code">
+													</form>
+												</div>
+												<div class="col-lg-6">
+													<form>
+														<br>
+														<label class="item-master-label">Availability</label>
+														<select id="add-item-availability" class="item-master-input">
+															<option value="true">Available</option>
+															<option value="false">Not Available</option>
+														</select>
+													</form>
+												</div>
+
+												<div class="col-lg-6">
+													<h5 id="add-item-instructions">
+														</h4>
+												</div>
+
+												<div class="row">
+
+													<div class="col-lg-3">
+														<br>
+														<br>
+														<button
+															class="item-master-button item-master-action-button item-master-close-option">
+															<span class="item-add-span">Cancel</span>
+														</button>
+													</div>
+
+
+
+													<div class="col-lg-3">
+														<br>
+														<br>
+														<button class="item-master-button"
+															class="item-master-action-button" id="add-item-button">
+															<span class="item-add-span">Add</span>
+														</button>
+													</div>
+												</div>
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<!--Edit Item -->
+								<div class="col-lg-6 col-md-6" id="edit-item-container">
+									<div class="item-box">
+										<div class="item-box-label">
+											<h1>ITEM EDIT
+												<img src="images/close icon.png" class="item-master-close-option">
+											</h1>
+
+										</div>
+										<div class="container">
+											<div class="row">
+
+												<div class="col-lg-6">
+
+													<form>
+														<br>
+														<label class="item-master-label">Item name</label>
+
+														<input class="item-master-input" id="edit-item-name">
+													</form>
+												</div>
+												<div class="col-lg-6">
+													<form>
+														<br>
+														<label class="item-master-label">Category</label>
+														<select id="edit-item-category-list" class="item-master-input">
+														</select>
+													</form>
+												</div>
+												<div class="col-lg-6">
+													<form>
+														<br>
+														<label class="item-master-label">Item code</label>
+
+														<input class="item-master-input" id="edit-item-code">
+													</form>
+												</div>
+												<div class="col-lg-6">
+													<form>
+														<br>
+														<label class="item-master-label">Availability</label>
+														<select id="edit-item-availability" class="item-master-input">
+															<option value="true">Available</option>
+															<option value="false">Not Available</option>
+														</select>
+													</form>
+												</div>
+
+												<div class="col-lg-6">
+													<h5 id="edit-item-instructions">
+														</h4>
+												</div>
+
+												<div class="row">
+													<div class="col-lg-3">
+														<br>
+														<br>
+														<button class="item-master-button item-master-action-button" id="delete-item-button">
+															<span class="item-add-span">Delete</span>
+														</button>
+													</div>
+													
+													<div class="col-lg-3">
+														<br>
+														<br>
+														<button class="item-master-button item-master-action-button item-master-close-option">
+															<span class="item-add-span">Cancel</span>
+														</button>
+													</div>
+
+
+
+													<div class="col-lg-3">
+														<br>
+														<br>
+														<button class="item-master-button"
+															class="item-master-action-button" id="save-item-button">
+															<span class="item-add-span">Save</span>
+														</button>
+													</div>
+												</div>
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!--Add Category -->
+								<div class="col-lg-6 col-md-6" id="add-category-box">
+									<div class="category-box">
+										<div class="category-add">
+											<h1>CATEGORY ADD
+												<img src="images/close icon.png" class="item-master-close-option">
+											</h1>
+										</div>
+										<div class="container">
+											<form id="add-category-form">
+												<div class="row">
+													<div class="col-lg-6">
+
+														<br>
+														<label class="item-master-label">Category name</label>
+
+														<input class="item-master-input" id="add-category-name">
+
+													</div>
+													<div class="col-lg-6">
+
+														<br>
+														<label class="item-master-label">Category Code</label>
+
+														<input class="item-master-input" id="add-category-code">
+
+													</div>
+
+													<div class="col-lg-6">
+														<h5 id="add-category-instructions">
+															</h4>
+													</div>
+
+													<div class="row">
+
+														<div class="col-lg-3">
+															<br>
+															<br>
+															<button type="button"
+																class="item-master-action-button item-master-close-option">
+																<span class="homepage-span">Cancel</span>
+															</button>
+														</div>
+
+
+
+														<div class="col-lg-3">
+															<br>
+															<br>
+															<button type="button" class="item-master-action-button"
+																id="add-category-button"><span
+																	class="homepage-span">Add</span></button>
+														</div>
+													</div>
+													<br>
+
+
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+
+								<!--Edit category -->
+
+								<div class="col-lg-6 col-md-6" id="edit-category-box">
+									<div class="category-box">
+										<div class="category-add">
+											<h1>CATEGORY EDIT
+												<img src="images/close icon.png" class="item-master-close-option">
+											</h1>
+										</div>
+										<div class="container">
+											<form id="edit-category-form">
+												<div class="row">
+													<div class="col-lg-6">
+
+														<br>
+														<label class="item-master-label">Category name</label>
+
+														<input class="item-master-input" id="edit-category-name">
+
+													</div>
+													<div class="col-lg-6">
+
+														<br>
+														<label class="item-master-label">Category Code</label>
+
+														<input class="item-master-input" id="edit-category-code">
+
+													</div>
+
+													<div class="col-lg-6">
+														<h5 id="add-category-instructions">
+															</h4>
+													</div>
+
+													<div class="row">
+
+														<div class="col-lg-3">
+															<br>
+															<br>
+															<button type="button" class="item-master-action-button">
+																<span class="homepage-span">Delete</span>
+															</button>
+														</div>
+														
+														<div class="col-lg-3">
+															<br>
+															<br>
+															<button type="button" class="item-master-action-button item-master-close-option">
+																<span class="homepage-span">Cancel</span>
+															</button>
+														</div>
+
+
+
+														<div class="col-lg-3">
+															<br>
+															<br>
+															<button type="button" class="item-master-action-button" id="edit-category-button">
+																<span class="homepage-span">Save</span>
+															</button>
+														</div>
+													</div>
+													<br>
+
+
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+	</div>
+</body>
+
+</html>
