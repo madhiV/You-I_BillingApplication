@@ -50,7 +50,7 @@ public class AddCategory extends HttpServlet {
 	
 	private boolean addCategory(String categoryName, String categoryCode) {
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","madhizap","qwerty123"); 
+			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321"); 
 			Statement st = con.createStatement();
 			st.executeUpdate("insert into category values(null, '"+categoryName+"', '"+categoryCode+"');");
 			return true;
