@@ -78,7 +78,7 @@ public class UserValidation extends HttpServlet {
 			return false;
 		}
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","madhizap","qwerty123"); 
+			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery("select * from user where email = '"+email+"';");
 			if(!rs.next()) {

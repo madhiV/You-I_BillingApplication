@@ -54,7 +54,7 @@ public class AddItem extends HttpServlet {
 	private boolean addItem(String itemName, String itemCategory, String itemCode, String itemAvailability) {
 		try {
 			int categoryId = getCategoryId(itemCategory);
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","madhizap","qwerty123"); 
+			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
 			Statement st = con.createStatement();
 			st.executeUpdate("insert into item values(null, "+categoryId+", '"+itemName+"', "+itemCode+", "+itemAvailability+", false);");
 			return true;
@@ -67,7 +67,7 @@ public class AddItem extends HttpServlet {
 	
 	private int getCategoryId(String categoryName) {
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","madhizap","qwerty123"); 
+			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery("select categoryId from category where categoryName='"+categoryName+"';");
 			//TODO: 

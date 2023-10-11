@@ -35,7 +35,7 @@ public class ItemList extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","madhizap","qwerty123"); 
+			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321"); 
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery("select itemName from item where itemName like '"+itemPrefix+"%';");
 			while(rs.next()) {
