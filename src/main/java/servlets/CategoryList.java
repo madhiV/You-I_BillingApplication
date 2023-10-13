@@ -32,6 +32,8 @@ public class CategoryList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String categoryPrefix = request.getParameter("categoryPrefix");
+		boolean appendInvisibleChar = request.getParameter("appendInvisibleChar").equals("true");
+		
 		categoryPrefix = categoryPrefix == null ? "" : categoryPrefix;
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -41,7 +43,7 @@ public class CategoryList extends HttpServlet {
 			ResultSet rs = st.executeQuery("select categoryName from category where categoryName like '"+categoryPrefix+"%';");
 			while(rs.next()) {
 				String categoryName = rs.getString(1);
-				out.println("<option value = '"+categoryName+"&#8291'>"+categoryName+"&#8291;</option>");
+				out.println("<option value = '"+categoryName+((appendInvisibleChar) ? "&#8291" : "" )+"'>"+categoryName+"&#8291;</option>");
 			}
 			out.close();
 		}

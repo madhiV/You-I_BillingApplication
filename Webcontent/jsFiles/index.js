@@ -62,7 +62,7 @@ $(document).ready(function() {
 		var itemSearchBarText = $("#item-search-bar").val();
 		if (itemSearchBarText.slice(-1) === '\u2063') {
 			var itemName = itemSearchBarText.slice(0, -1);
-			loadCategoryList("#edit-item-category-list");
+			loadCategoryList("#edit-item-category-list", false);
 			displayEditItemMenu(itemName);
 			$("#item-search-bar").val(itemName);
 		}
@@ -70,7 +70,7 @@ $(document).ready(function() {
 	
 	$("#category-search-bar").on("input", function(){
 		var categoryPrefix = $("#category-search-bar").val();
-		loadCategoryList("#search-bar-categories", categoryPrefix);
+		loadCategoryList("#search-bar-categories", true, categoryPrefix);
 		var categorySearchBarText = $("#category-search-bar").val();
 		if (categorySearchBarText.slice(-1) === '\u2063') {
 			var categoryName = categorySearchBarText.slice(0, -1);
@@ -96,7 +96,7 @@ $(document).ready(function() {
 		$("#add-category-box").hide();
 		$("#edit-item-container").hide();
 		var categoryPrefix = $("#category-search-bar").val();
-		loadCategoryList("#search-bar-categories", categoryPrefix);
+		loadCategoryList("#search-bar-categories", true, categoryPrefix);
 		loadItemsInSearchBar();
 	}
 
@@ -187,12 +187,14 @@ $(document).ready(function() {
 			});
 	}
 
-	function loadCategoryList(categoryListElement, categoryPrefix) {
+	function loadCategoryList(categoryListElement, appendInvisibleChar, categoryPrefix) {
+		//&#8291 is invisible char added which helps in checking input completion. -> appendInvisibleChar
 		$.ajax({
 			url: "categories-list",
 			type: "GET",
 			data: {
-				categoryPrefix: categoryPrefix
+				categoryPrefix: categoryPrefix,
+				appendInvisibleChar: appendInvisibleChar
 			},
 			success: function(data, textStatus, xhr) {
 				if (xhr.readyState == 4) {
@@ -271,9 +273,9 @@ $(document).ready(function() {
 		var editFormElements = JSON.parse(itemJsonData);
 		
 		$("#edit-item-name").val(editFormElements.itemName);
-		//$("#edit-item-category-list").value = editFormElements.categoryName;
+		$("#edit-item-category-list").val(editFormElements.categoryName);
 		$("#edit-item-code").val(editFormElements.itemCode);
-		$("#edit-item-availability").value = editFormElements.itemAvailability;
+		$("#edit-item-availability").val(itemAvailabilityText.toString());
 	}
 	
 	function populateEditCategoryForm(categoryData){
