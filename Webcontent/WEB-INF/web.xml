@@ -97,4 +97,24 @@
     <servlet-name>EditCategory</servlet-name>
     <url-pattern>/edit-category</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteItem</display-name>
+    <servlet-name>DeleteItem</servlet-name>
+    <servlet-class>servlets.DeleteItem</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteItem</servlet-name>
+    <url-pattern>/delete-item</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteCategory</display-name>
+    <servlet-name>DeleteCategory</servlet-name>
+    <servlet-class>servlets.DeleteCategory</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteCategory</servlet-name>
+    <url-pattern>/delete-category</url-pattern>
+  </servlet-mapping>
 </web-app>
