@@ -45,7 +45,6 @@ public class CategoryDetails extends HttpServlet {
 			
 
 			String jsonData = "{ \"categoryName\" : \""+categoryName+"\", \"categoryCode\" : "+ categoryCode+"}";
-			System.out.println(jsonData);
 			
 			out.print(jsonData);
 		}

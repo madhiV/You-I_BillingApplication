@@ -77,4 +77,24 @@
     <servlet-name>CategoryDetails</servlet-name>
     <url-pattern>/category-details</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditItem</display-name>
+    <servlet-name>EditItem</servlet-name>
+    <servlet-class>servlets.EditItem</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditItem</servlet-name>
+    <url-pattern>/edit-item</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditCategory</display-name>
+    <servlet-name>EditCategory</servlet-name>
+    <servlet-class>servlets.EditCategory</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditCategory</servlet-name>
+    <url-pattern>/edit-category</url-pattern>
+  </servlet-mapping>
 </web-app>

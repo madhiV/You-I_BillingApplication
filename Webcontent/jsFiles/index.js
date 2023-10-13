@@ -55,6 +55,14 @@ $(document).ready(function() {
 		addCategory();
 	});
 	
+	
+	$("#edit-item-save-button").click(function(){
+		editItem();
+	});
+	
+	$("#edit-category-save-button").click(function(){
+		editCategory();
+	});
 
 	
 	$("#item-search-bar").on("input", function(){
@@ -101,6 +109,7 @@ $(document).ready(function() {
 	}
 
 	function displayAddItemSection() {
+		$("#add-item-instructions").innerHTML = "";
 		$("#edit-category-box").hide();
 		$("#edit-item-container").hide();
 		$("#add-category-box").hide();
@@ -108,6 +117,10 @@ $(document).ready(function() {
 		//Load category dropdown...
 		$.get(
 			"categories-list",
+			{
+				categoryPrefix: "",
+				appendInvisibleChar: false
+			},
 			function(data, textStatus, xhr) {
 				if (xhr.readyState == 4) {
 					if (xhr.status == 200) {
@@ -117,6 +130,7 @@ $(document).ready(function() {
 			});
 	}
 	function displayAddCategorySection() {
+		$("#add-category-instructions").innerHTML = "";
 		$("#add-item-container").hide();
 		$("#edit-category-box").hide();
 		$("#edit-item-container").hide();
@@ -131,6 +145,7 @@ $(document).ready(function() {
 	
 
 	function addCategory() {
+		$("#add-category-instructions").innerHTML = "";
 		var categoryName = $("#add-category-name").val();
 		var categoryCode = $("#add-category-code").val();
 		$.post(
@@ -141,13 +156,38 @@ $(document).ready(function() {
 			},
 			function(data, textStatus, xhr) {
 				if (xhr.readyState == 4 && xhr.status == 200) {
-					document.querySelector("#add-category-instructions").innerHTML = "Category added successfully!";
+					document.querySelector("#add-category-instructions").innerHTML = "Category add success!";
 				}
 				else {
-					document.querySelector("#add-category-instructions").innerHTML = "Problem while adding category";
+					document.querySelector("#add-category-instructions").innerHTML = "Category add failed";
 				}
 			}).fail(function() {
-				document.querySelector("#add-category-instructions").innerHTML = "Problem while adding category";
+				document.querySelector("#add-category-instructions").innerHTML = "Category add failed";
+			});
+	}
+	
+	function editCategory() {
+		$("#edit-category-instructions").innerHTML = "";
+		var categoryName = $("#edit-category-name").val();
+		var categoryCode = $("#edit-category-code").val();
+		var categoryOldName = $("#edit-category-old-name").val();
+		
+		$.post(
+			"edit-category",
+			{
+				categoryName: categoryName,
+				categoryCode: categoryCode,
+				categoryOldName: categoryOldName
+			},
+			function(data, textStatus, xhr) {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					document.querySelector("#edit-category-instructions").innerHTML = "Category edit success!";
+				}
+				else {
+					document.querySelector("#edit-category-instructions").innerHTML = "Category edit failed";
+				}
+			}).fail(function() {
+				document.querySelector("#edit-category-instructions").innerHTML = "Category edit failed";
 			});
 	}
 
@@ -165,6 +205,7 @@ $(document).ready(function() {
 	}
 
 	function addItem() {
+		$("#add-item-instructions").innerHTML = "";
 		var itemName = $("#add-item-name").val();
 		var itemCategory = $("#add-item-category-list").val();
 		var itemCode = $("#add-item-code").val();
@@ -184,6 +225,32 @@ $(document).ready(function() {
 				}
 			}).fail(function() {
 				document.querySelector("#add-item-instructions").innerHTML = "Item add failed!";
+			});
+	}
+	
+	function editItem() {
+		$("#edit-item-instructions").innerHTML = "";
+		var itemName = $("#edit-item-name").val();
+		var itemCategory = $("#edit-item-category-list").val();
+		var itemCode = $("#edit-item-code").val();
+		var itemAvailability = $("#edit-item-availability").val();
+		var oldItemName = $("#edit-selected-item-name").val();
+
+		$.post(
+			"edit-item",
+			{
+				itemName: itemName,
+				itemCategory: itemCategory,
+				itemCode: itemCode,
+				itemAvailability: itemAvailability,
+				oldItemName: oldItemName
+			},
+			function(data, textStatus, xhr) {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					document.querySelector("#edit-item-instructions").innerHTML = "Item edit success!";
+				}
+			}).fail(function() {
+				document.querySelector("#edit-item-instructions").innerHTML = "Item edit failed!";
 			});
 	}
 
@@ -225,10 +292,12 @@ $(document).ready(function() {
 	}
 	
 	function displayEditItemMenu(itemName){
+		$("#edit-item-instructions").innerHTML = "";
 		$("#add-item-container").hide();
 		$("#add-category-box").hide();
 		$("#edit-category-box").hide();
 		$("#edit-item-container").show();
+		$("#edit-selected-item-name").val(itemName);
 		
 		//TODO: Handle unspecified category !
 		$.ajax({
@@ -248,10 +317,12 @@ $(document).ready(function() {
 	}
 
 	function displayEditCategoryMenu(categoryName){
+		$("#edit-category-instructions").innerHTML = "";
 		$("#add-item-container").hide();
 		$("#add-category-box").hide();
 		$("#edit-item-container").hide();
 		$("#edit-category-box").show();
+		$("#edit-category-old-name").val(categoryName);
 		
 		$.ajax({
 			url: "category-details",
@@ -275,13 +346,15 @@ $(document).ready(function() {
 		$("#edit-item-name").val(editFormElements.itemName);
 		$("#edit-item-category-list").val(editFormElements.categoryName);
 		$("#edit-item-code").val(editFormElements.itemCode);
-		$("#edit-item-availability").val(itemAvailabilityText.toString());
+		$("#edit-item-availability").val(editFormElements.itemAvailability.toString());
+		$("#edit-item-instructions").innerHTML = "";
 	}
 	
 	function populateEditCategoryForm(categoryData){
 		var editCategoryElements = JSON.parse(categoryData);
 		$("#edit-category-name").val(editCategoryElements.categoryName);
 		$("#edit-category-code").val(editCategoryElements.categoryCode);
+		$("#edit-category-instructions").innerHTML = "";
 	}
 	
 });

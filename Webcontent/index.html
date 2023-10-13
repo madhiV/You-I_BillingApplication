@@ -191,11 +191,11 @@
 										<br>
 										<label class="item-master-label">ITEM</label>
 
-										<input type="text" id="item-search-bar" class="item-master-input" list="search-bar-items"
-											placeholder="Enter item"/>
-										<datalist id="search-bar-items" >
+										<input type="text" id="item-search-bar" class="item-master-input"
+											list="search-bar-items" placeholder="Enter item" />
+										<datalist id="search-bar-items">
 										</datalist>
-										
+
 									</form>
 								</div>
 
@@ -209,8 +209,8 @@
 									<form>
 										<br>
 										<label class="item-master-label">CATEGORY</label>
-										<input type="text" id="category-search-bar" class="item-master-input" list="search-bar-categories"
-											placeholder="Enter category" />
+										<input type="text" id="category-search-bar" class="item-master-input"
+											list="search-bar-categories" placeholder="Enter category" />
 										<datalist id="search-bar-categories">
 										</datalist>
 									</form>
@@ -271,8 +271,9 @@
 
 												<div class="col-lg-6">
 													<h5 id="add-item-instructions">
-														</h4>
+													</h5>
 												</div>
+												<br>
 
 												<div class="row">
 
@@ -302,7 +303,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<!--Edit Item -->
 								<div class="col-lg-6 col-md-6" id="edit-item-container">
 									<div class="item-box">
@@ -360,15 +361,22 @@
 													<div class="col-lg-3">
 														<br>
 														<br>
-														<button class="item-master-button item-master-action-button" id="delete-item-button">
+														<button class="item-master-button item-master-action-button"
+															id="delete-item-button">
 															<span class="item-add-span">Delete</span>
 														</button>
 													</div>
-													
+
+													<div class="col-lg-6">
+														<h5 id="edit-item-instructions">
+														</h5>
+													</div>
+
 													<div class="col-lg-3">
 														<br>
 														<br>
-														<button class="item-master-button item-master-action-button item-master-close-option">
+														<button
+															class="item-master-button item-master-action-button item-master-close-option">
 															<span class="item-add-span">Cancel</span>
 														</button>
 													</div>
@@ -379,7 +387,7 @@
 														<br>
 														<br>
 														<button class="item-master-button"
-															class="item-master-action-button" id="save-item-button">
+															class="item-master-action-button" id="edit-item-save-button">
 															<span class="item-add-span">Save</span>
 														</button>
 													</div>
@@ -388,6 +396,8 @@
 
 											</div>
 										</div>
+
+										<input type="hidden" id="edit-selected-item-name" />
 									</div>
 								</div>
 
@@ -421,7 +431,7 @@
 
 													<div class="col-lg-6">
 														<h5 id="add-category-instructions">
-															</h4>
+														</h5>
 													</div>
 
 													<div class="row">
@@ -484,8 +494,8 @@
 													</div>
 
 													<div class="col-lg-6">
-														<h5 id="add-category-instructions">
-															</h4>
+														<h5 id="edit-category-instructions">
+														</h5>
 													</div>
 
 													<div class="row">
@@ -497,11 +507,12 @@
 																<span class="homepage-span">Delete</span>
 															</button>
 														</div>
-														
+
 														<div class="col-lg-3">
 															<br>
 															<br>
-															<button type="button" class="item-master-action-button item-master-close-option">
+															<button type="button"
+																class="item-master-action-button item-master-close-option">
 																<span class="homepage-span">Cancel</span>
 															</button>
 														</div>
@@ -511,7 +522,8 @@
 														<div class="col-lg-3">
 															<br>
 															<br>
-															<button type="button" class="item-master-action-button" id="edit-category-button">
+															<button type="button" class="item-master-action-button"
+																id="edit-category-save-button">
 																<span class="homepage-span">Save</span>
 															</button>
 														</div>
@@ -522,6 +534,10 @@
 												</div>
 											</form>
 										</div>
+	
+										<!--This is a hidden form field which stores the previous name of the category
+										This field will be auto-populated when the edit category form is loaded.!-->
+										<input type="hidden" id="edit-category-old-name" />
 									</div>
 								</div>
 
