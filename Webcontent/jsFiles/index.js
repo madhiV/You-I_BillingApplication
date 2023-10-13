@@ -63,6 +63,14 @@ $(document).ready(function() {
 	$("#edit-category-save-button").click(function(){
 		editCategory();
 	});
+	
+	$("#edit-category-delete-button").click(function(){
+		deleteCategory();
+	});
+	
+	$("#edit-item-delete-button").click(function(){
+		deleteItem();
+	});
 
 	
 	$("#item-search-bar").on("input", function(){
@@ -190,6 +198,30 @@ $(document).ready(function() {
 				document.querySelector("#edit-category-instructions").innerHTML = "Category edit failed";
 			});
 	}
+	
+	function deleteCategory() {
+		$("#edit-category-instructions").innerHTML = "";
+		var categoryName = $("#edit-category-old-name").val();
+		
+		//TODO: Are you sure you want to delete the category instruction!
+		
+		$.post(
+			"delete-category",
+			{
+				categoryName: categoryName
+			},
+			function(data, textStatus, xhr) {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					resetCategoryForm();
+					document.querySelector("#edit-category-instructions").innerHTML = "Category delete success!";
+				}
+				else {
+					document.querySelector("#edit-category-instructions").innerHTML = "Category delete failed";
+				}
+			}).fail(function() {
+				document.querySelector("#edit-category-instructions").innerHTML = "Category delete failed";
+			});
+	}
 
 	function resetCategoryForm() {
 		$("#add-category-name").val("");
@@ -199,9 +231,9 @@ $(document).ready(function() {
 		document.querySelector("#add-category-instructions").innerHTML = "";
 	}
 	function resetItemForm() {
+		document.querySelector("#add-item-instructions").innerHTML = "";
 		$("#add-item-name").val("");
 		$("#add-item-code").val("");
-		document.querySelector("#add-item-instructions").innerHTML = "";
 	}
 
 	function addItem() {
@@ -251,6 +283,30 @@ $(document).ready(function() {
 				}
 			}).fail(function() {
 				document.querySelector("#edit-item-instructions").innerHTML = "Item edit failed!";
+			});
+	}
+	
+	function deleteItem() {
+		$("#edit-item-instructions").innerHTML = "";
+		var itemName = $("#edit-selected-item-name").val();
+		
+		//TODO: Are you sure you want to delete the category instruction!
+		
+		$.post(
+			"delete-item",
+			{
+				itemName: itemName
+			},
+			function(data, textStatus, xhr) {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					resetItemForm();
+					document.querySelector("#edit-item-instructions").innerHTML = "Item delete success!";
+				}
+				else {
+					document.querySelector("#edit-item-instructions").innerHTML = "Item delete failed";
+				}
+			}).fail(function() {
+				document.querySelector("#edit-item-instructions").innerHTML = "Item delete failed";
 			});
 	}
 
