@@ -31,6 +31,7 @@ public class ItemList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String itemPrefix = request.getParameter("itemPrefix");
+		
 		itemPrefix = itemPrefix == null ? "" : itemPrefix;
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();

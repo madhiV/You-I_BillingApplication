@@ -63,7 +63,10 @@
 										<div class="col-lg-12">
 											<div class="row">
 												<div class="col-lg-10">
-													<input class="homepage-input" type="text">
+													<input class="homepage-input" list="order-master-search-bar-items"
+														id="order-master-search-bar">
+													<datalist id="order-master-search-bar-items">
+													</datalist>
 												</div>
 											</div>
 										</div>
@@ -387,7 +390,8 @@
 														<br>
 														<br>
 														<button class="item-master-button"
-															class="item-master-action-button" id="edit-item-save-button">
+															class="item-master-action-button"
+															id="edit-item-save-button">
 															<span class="item-add-span">Save</span>
 														</button>
 													</div>
@@ -503,7 +507,8 @@
 														<div class="col-lg-3">
 															<br>
 															<br>
-															<button type="button" class="item-master-action-button" id="edit-category-delete-button">
+															<button type="button" class="item-master-action-button"
+																id="edit-category-delete-button">
 																<span class="homepage-span">Delete</span>
 															</button>
 														</div>
@@ -534,7 +539,7 @@
 												</div>
 											</form>
 										</div>
-	
+
 										<!--This is a hidden form field which stores the previous name of the category
 										This field will be auto-populated when the edit category form is loaded.!-->
 										<input type="hidden" id="edit-category-old-name" />
