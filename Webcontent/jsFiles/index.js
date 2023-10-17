@@ -72,15 +72,27 @@ $(document).ready(function() {
 		deleteItem();
 	});
 
-	
+	$("#order-master-search-bar").on("input", function() {
+		var itemSearchBarText = $("#order-master-search-bar").val();
+		var itemList = "#order-master-search-bar-items";
+		loadItemsInSearchBar(itemSearchBarText, itemList);
+		if (itemSearchBarText.slice(-1) === '\u2063') {
+			var itemName = itemSearchBarText.slice(0, -1);
+			addItemToBillSection(itemName);
+			$("#order-master-search-bar").val("");
+		}
+	});
+
 	$("#item-search-bar").on("input", function(){
-		loadItemsInSearchBar();
+		var itemPrefix = $("#item-search-bar").val();
+		var itemList = "#search-bar-items";
+		loadItemsInSearchBar(itemPrefix, itemList);
 		var itemSearchBarText = $("#item-search-bar").val();
 		if (itemSearchBarText.slice(-1) === '\u2063') {
 			var itemName = itemSearchBarText.slice(0, -1);
 			loadCategoryList("#edit-item-category-list", false);
 			displayEditItemMenu(itemName);
-			$("#item-search-bar").val(itemName);
+			$("#item-search-bar").val("");
 		}
 	});
 	
@@ -95,6 +107,7 @@ $(document).ready(function() {
 		}
 	});
 
+	//Order master section is present in homepage... (homepage == ordermaster section)
 	function displayHomepage() {
 		$("#login-page").hide();
 		$("#homepage").show();
@@ -102,6 +115,10 @@ $(document).ready(function() {
 		$("#item-master-section").hide();
 		$("#edit-category-box").hide();
 		$("#edit-item-container").hide();
+		
+		var itemPrefix = $("#order-master-search-bar").val();
+		var itemList = "#order-master-search-bar-items";
+		loadItemsInSearchBar(itemPrefix, itemList);
 	}
 	function displayItemMasterSection() {
 		$("#homepage").show();
@@ -111,9 +128,12 @@ $(document).ready(function() {
 		$("#edit-category-box").hide();
 		$("#add-category-box").hide();
 		$("#edit-item-container").hide();
+		
 		var categoryPrefix = $("#category-search-bar").val();
 		loadCategoryList("#search-bar-categories", true, categoryPrefix);
-		loadItemsInSearchBar();
+		var itemPrefix = $("#item-search-bar").val();
+		var itemList = "#search-bar-items";
+		loadItemsInSearchBar(itemPrefix, itemList);
 	}
 
 	function displayAddItemSection() {
@@ -329,8 +349,7 @@ $(document).ready(function() {
 		});
 	}
 
-	function loadItemsInSearchBar() {
-		var itemPrefix = $("#item-search-bar").val();
+	function loadItemsInSearchBar(itemPrefix, itemListId) {
 		$.ajax({
 			url: "items-list",
 			type: "GET",
@@ -340,7 +359,7 @@ $(document).ready(function() {
 			success: function(data, textStatus, xhr) {
 				if (xhr.readyState == 4) {
 					if (xhr.status == 200) {
-						document.querySelector("#search-bar-items").innerHTML = xhr.responseText;
+						document.querySelector(itemListId).innerHTML = xhr.responseText;
 					}
 				}
 			}
@@ -411,6 +430,10 @@ $(document).ready(function() {
 		$("#edit-category-name").val(editCategoryElements.categoryName);
 		$("#edit-category-code").val(editCategoryElements.categoryCode);
 		$("#edit-category-instructions").innerHTML = "";
+	}
+	
+	function addItemToBillSection(itemName){
+		alert(itemName+" added");
 	}
 	
 });
