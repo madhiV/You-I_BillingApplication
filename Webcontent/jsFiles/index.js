@@ -75,24 +75,25 @@ $(document).ready(function() {
 	$("#order-master-search-bar").on("input", function() {
 		var itemSearchBarText = $("#order-master-search-bar").val();
 		var itemList = "#order-master-search-bar-items";
-		loadItemsInSearchBar(itemSearchBarText, itemList);
+		loadItemsInSearchBar(itemSearchBarText, itemList, true);
 		if (itemSearchBarText.slice(-1) === '\u2063') {
-			var itemName = itemSearchBarText.slice(0, -1);
+			var itemName = itemSearchBarText.slice(0, -1).split("    ")[0];
 			addItemToBillSection(itemName);
 			$("#order-master-search-bar").val("");
+			loadItemsInSearchBar("", itemList, true);
 		}
 	});
 
-	$("#item-search-bar").on("input", function(){
-		var itemPrefix = $("#item-search-bar").val();
+	$("#item-master-item-search-bar").on("input", function(){
+		var itemPrefix = $("#item-master-item-search-bar").val();
 		var itemList = "#search-bar-items";
-		loadItemsInSearchBar(itemPrefix, itemList);
-		var itemSearchBarText = $("#item-search-bar").val();
+		loadItemsInSearchBar(itemPrefix, itemList, false);
+		var itemSearchBarText = $("#item-master-item-search-bar").val();
 		if (itemSearchBarText.slice(-1) === '\u2063') {
 			var itemName = itemSearchBarText.slice(0, -1);
 			loadCategoryList("#edit-item-category-list", false);
 			displayEditItemMenu(itemName);
-			$("#item-search-bar").val("");
+			$("#item-master-item-search-bar").val("");
 		}
 	});
 	
@@ -118,7 +119,7 @@ $(document).ready(function() {
 		
 		var itemPrefix = $("#order-master-search-bar").val();
 		var itemList = "#order-master-search-bar-items";
-		loadItemsInSearchBar(itemPrefix, itemList);
+		loadItemsInSearchBar(itemPrefix, itemList, true);
 	}
 	function displayItemMasterSection() {
 		$("#homepage").show();
@@ -131,9 +132,9 @@ $(document).ready(function() {
 		
 		var categoryPrefix = $("#category-search-bar").val();
 		loadCategoryList("#search-bar-categories", true, categoryPrefix);
-		var itemPrefix = $("#item-search-bar").val();
+		var itemPrefix = $("#item-master-item-search-bar").val();
 		var itemList = "#search-bar-items";
-		loadItemsInSearchBar(itemPrefix, itemList);
+		loadItemsInSearchBar(itemPrefix, itemList, false);
 	}
 
 	function displayAddItemSection() {
@@ -349,12 +350,13 @@ $(document).ready(function() {
 		});
 	}
 
-	function loadItemsInSearchBar(itemPrefix, itemListId) {
+	function loadItemsInSearchBar(itemPrefix, itemListId, appendItemCode) {
 		$.ajax({
 			url: "items-list",
 			type: "GET",
 			data: {
-				itemPrefix: itemPrefix
+				itemPrefix: itemPrefix,
+				appendItemCode: appendItemCode
 			},
 			success: function(data, textStatus, xhr) {
 				if (xhr.readyState == 4) {
@@ -433,7 +435,52 @@ $(document).ready(function() {
 	}
 	
 	function addItemToBillSection(itemName){
-		alert(itemName+" added");
+		$.ajax({
+			url: "item-details",
+			type: "GET",
+			data: {
+				itemName: itemName
+			},
+			success: function(data, textStatus, xhr) {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+						addItemtoOrderBillSection(xhr.responseText);
+					}
+				}
+			}
+		});
+	}
+	
+	function addItemtoOrderBillSection(itemJsonData){
+		var itemData = JSON.parse(itemJsonData);
+		var orderTable = document.getElementById("order-master-billing-section-table");
+		if(itemAddedAlready(orderTable, itemData.itemName)){
+			//Item Already Added instruction.!
+			return;	
+		}
+		//Add new row
+		var newRow = orderTable.insertRow();
+		newRow.insertCell().innerHTML = orderTable.rows.length - 1;
+		newRow.insertCell().innerHTML = itemData.itemName;
+		newRow.insertCell().innerHTML = itemData.categoryName;
+		newRow.insertCell().innerHTML = 1
+		newRow.insertCell().innerHTML = 100
+		newRow.insertCell().innerHTML = "false";
+	}
+	
+	function itemAddedAlready(orderTable, itemName){
+		var itemNameColumn = 1;
+		for(var i = 1; i < orderTable.rows.length; i++){
+			//Item is present in 2nd column
+			if(orderTable.rows[i].cells[itemNameColumn].innerHTML === itemName){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	function createTableCell(content){
+		return "<td>"+content+"</td>";
 	}
 	
 });

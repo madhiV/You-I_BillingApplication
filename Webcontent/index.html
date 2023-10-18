@@ -145,28 +145,18 @@
 								<div class="col-lg-4">
 									<div class="box1">
 										<h3>YOU & I<br>JUICE AND SANCKS</h3>
-										<table style="width:100%">
+										<table style="width:100%" id="order-master-billing-section-table">
 											<tr>
-												<th>ITEM</th>
-												<th>QTY</th>
-												<th>PRICE</th>
-												<th>AMOUNT</th>
+												<th>S.No.</th>
+												<th>Item</th>
+												<th>Category</th>
+												<th>Quantity</th>
+												<th>Price</th>
+												<th>Edit</th>
 											</tr>
-											<tr>
-												<td>Jill</td>
-												<td>Smith</td>
-												<td>50</td>
-											</tr>
-											<tr>
-												<td>Eve</td>
-												<td>Jackson</td>
-												<td>94</td>
-											</tr>
-											<tr>
-												<td>John</td>
-												<td>Doe</td>
-												<td>80</td>
-											</tr>
+											<div id="order-section-added-items">
+												
+											</div>
 										</table>
 										<br>
 										<h4>Grand total</h4>
@@ -194,7 +184,7 @@
 										<br>
 										<label class="item-master-label">ITEM</label>
 
-										<input type="text" id="item-search-bar" class="item-master-input"
+										<input type="text" id="item-master-item-search-bar" class="item-master-input"
 											list="search-bar-items" placeholder="Enter item" />
 										<datalist id="search-bar-items">
 										</datalist>
