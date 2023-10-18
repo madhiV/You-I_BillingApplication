@@ -31,6 +31,7 @@ public class ItemList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String itemPrefix = request.getParameter("itemPrefix");
+		boolean appendItemCode = request.getParameter("appendItemCode") != null && request.getParameter("appendItemCode").equals("true");
 		
 		itemPrefix = itemPrefix == null ? "" : itemPrefix;
 		response.setContentType("text/html");
@@ -38,10 +39,10 @@ public class ItemList extends HttpServlet {
 		try {
 			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321"); 
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("select itemName from item where itemName like '"+itemPrefix+"%';");
+			ResultSet rs = st.executeQuery("select itemName, itemCode from item where itemName like '"+itemPrefix+"%';");
 			while(rs.next()) {
 				String itemName = rs.getString(1);
-				out.println("<option value = '"+itemName+"&#8291'>"+itemName+"&#8291;</option>");
+				out.println("<option value = '"+itemName+(appendItemCode ? "    "+rs.getString(2): "")+"&#8291'>");
 			}
 			out.close();
 		}
