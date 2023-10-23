@@ -38,7 +38,7 @@ public class ItemDetails extends HttpServlet {
 		try {
 			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321"); 
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("select categoryId, itemCode, availability from item where itemName ='"+itemName+"';");
+			ResultSet rs = st.executeQuery("select categoryId, itemCode, availability, price from item where itemName ='"+itemName+"';");
 			rs.next();
 			
 			int categoryId = rs.getInt(1);
@@ -47,9 +47,10 @@ public class ItemDetails extends HttpServlet {
 			
 			boolean itemAvailability = rs.getBoolean(3);
 			int itemCode = rs.getInt(2);
+			float itemPrice = rs.getFloat(4);
 			
 
-			String jsonData = "{ \"itemName\" : \""+itemName+"\", \"categoryName\" : \""+ categoryName+"\", \"itemCode\" : "+itemCode+", \"itemAvailability\" : "+itemAvailability+"}";
+			String jsonData = "{ \"itemName\" : \""+itemName+"\", \"categoryName\" : \""+ categoryName+"\", \"itemCode\" : "+itemCode+", \"itemAvailability\" : "+itemAvailability+", \"itemPrice\": "+itemPrice+"}";
 			
 			out.print(jsonData);
 		}

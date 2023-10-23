@@ -42,8 +42,9 @@ public class EditItem extends HttpServlet {
 		String itemCode = request.getParameter("itemCode");
 		String itemAvailability = request.getParameter("itemAvailability");
 		String oldItemName = request.getParameter("oldItemName");
+		float itemPrice = Float.parseFloat(request.getParameter("itemPrice"));
 		
-		if(editItem(itemName, itemCategory, itemCode, itemAvailability, oldItemName)) {
+		if(editItem(itemName, itemCategory, itemCode, itemAvailability, oldItemName, itemPrice)) {
 			response.setStatus(response.SC_OK);
 		}
 		else {
@@ -51,12 +52,12 @@ public class EditItem extends HttpServlet {
 		}
 	}
 	
-	private boolean editItem(String itemName, String itemCategory, String itemCode, String itemAvailability, String oldItemName) {
+	private boolean editItem(String itemName, String itemCategory, String itemCode, String itemAvailability, String oldItemName, float itemPrice) {
 		try {
 			int categoryId = getCategoryId(itemCategory);
 			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
 			Statement st = con.createStatement();
-			st.executeUpdate("update item set itemName = '"+itemName+"', itemCode = "+itemCode+", categoryId = "+categoryId+", availability = "+itemAvailability+" where itemName = '"+oldItemName+"';");
+			st.executeUpdate("update item set itemName = '"+itemName+"', itemCode = "+itemCode+", categoryId = "+categoryId+", availability = "+itemAvailability+", price = "+itemPrice+" where itemName = '"+oldItemName+"';");
 			return true;
 		}
 		catch(Exception e){

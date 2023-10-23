@@ -263,6 +263,8 @@ $(document).ready(function() {
 		var itemCategory = $("#add-item-category-list").val();
 		var itemCode = $("#add-item-code").val();
 		var itemAvailability = $("#add-item-availability").val();
+		var itemPrice = $("#add-item-price").val();
+		alert(itemPrice);
 
 		$.post(
 			"add-item",
@@ -270,7 +272,8 @@ $(document).ready(function() {
 				itemName: itemName,
 				itemCategory: itemCategory,
 				itemCode: itemCode,
-				itemAvailability: itemAvailability
+				itemAvailability: itemAvailability, 
+				itemPrice: itemPrice
 			},
 			function(data, textStatus, xhr) {
 				if (xhr.readyState == 4 && xhr.status == 200) {
@@ -288,6 +291,7 @@ $(document).ready(function() {
 		var itemCode = $("#edit-item-code").val();
 		var itemAvailability = $("#edit-item-availability").val();
 		var oldItemName = $("#edit-selected-item-name").val();
+		var itemPrice = $("#edit-item-price").val();
 
 		$.post(
 			"edit-item",
@@ -296,7 +300,8 @@ $(document).ready(function() {
 				itemCategory: itemCategory,
 				itemCode: itemCode,
 				itemAvailability: itemAvailability,
-				oldItemName: oldItemName
+				oldItemName: oldItemName,
+				itemPrice: itemPrice
 			},
 			function(data, textStatus, xhr) {
 				if (xhr.readyState == 4 && xhr.status == 200) {
@@ -424,6 +429,7 @@ $(document).ready(function() {
 		$("#edit-item-category-list").val(editFormElements.categoryName);
 		$("#edit-item-code").val(editFormElements.itemCode);
 		$("#edit-item-availability").val(editFormElements.itemAvailability.toString());
+		$("#edit-item-price").val(editFormElements.itemPrice);
 		$("#edit-item-instructions").innerHTML = "";
 	}
 	
@@ -464,7 +470,7 @@ $(document).ready(function() {
 		newRow.insertCell().innerHTML = itemData.itemName;
 		newRow.insertCell().innerHTML = itemData.categoryName;
 		newRow.insertCell().innerHTML = 1
-		newRow.insertCell().innerHTML = 100
+		newRow.insertCell().innerHTML = itemData.itemPrice;
 		newRow.insertCell().innerHTML = "false";
 	}
 	

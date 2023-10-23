@@ -42,8 +42,9 @@ public class AddItem extends HttpServlet {
 		String itemCategory = request.getParameter("itemCategory");
 		String itemCode = request.getParameter("itemCode");
 		String itemAvailability = request.getParameter("itemAvailability");
+		String itemPrice = request.getParameter("itemPrice");
 		
-		if(addItem(itemName, itemCategory, itemCode, itemAvailability)) {
+		if(addItem(itemName, itemCategory, itemCode, itemAvailability, Float.parseFloat(itemPrice))) {
 			response.setStatus(response.SC_OK);
 		}
 		else {
@@ -51,12 +52,12 @@ public class AddItem extends HttpServlet {
 		}
 	}
 
-	private boolean addItem(String itemName, String itemCategory, String itemCode, String itemAvailability) {
+	private boolean addItem(String itemName, String itemCategory, String itemCode, String itemAvailability, float itemPrice) {
 		try {
 			int categoryId = getCategoryId(itemCategory);
 			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
 			Statement st = con.createStatement();
-			st.executeUpdate("insert into item values(null, "+categoryId+", '"+itemName+"', "+itemCode+", "+itemAvailability+", false);");
+			st.executeUpdate("insert into item values(null, "+categoryId+", '"+itemName+"', "+itemCode+", "+itemAvailability+", false, "+itemPrice+");");
 			return true;
 		}
 		catch(Exception e){
