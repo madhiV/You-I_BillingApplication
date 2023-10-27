@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	setInterval(updateBillNo, 5000);
 	$("#homepage").hide();
 	//Direct login start
 	displayHomepage();
@@ -54,21 +55,21 @@ $(document).ready(function() {
 	$("#add-category-button").click(function() {
 		addCategory();
 	});
-	
-	
-	$("#edit-item-save-button").click(function(){
+
+
+	$("#edit-item-save-button").click(function() {
 		editItem();
 	});
-	
-	$("#edit-category-save-button").click(function(){
+
+	$("#edit-category-save-button").click(function() {
 		editCategory();
 	});
-	
-	$("#edit-category-delete-button").click(function(){
+
+	$("#edit-category-delete-button").click(function() {
 		deleteCategory();
 	});
-	
-	$("#edit-item-delete-button").click(function(){
+
+	$("#edit-item-delete-button").click(function() {
 		deleteItem();
 	});
 
@@ -84,7 +85,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#item-master-item-search-bar").on("input", function(){
+	$("#item-master-item-search-bar").on("input", function() {
 		var itemPrefix = $("#item-master-item-search-bar").val();
 		var itemList = "#search-bar-items";
 		loadItemsInSearchBar(itemPrefix, itemList, false);
@@ -96,8 +97,8 @@ $(document).ready(function() {
 			$("#item-master-item-search-bar").val("");
 		}
 	});
-	
-	$("#category-search-bar").on("input", function(){
+
+	$("#category-search-bar").on("input", function() {
 		var categoryPrefix = $("#category-search-bar").val();
 		loadCategoryList("#search-bar-categories", true, categoryPrefix);
 		var categorySearchBarText = $("#category-search-bar").val();
@@ -116,7 +117,7 @@ $(document).ready(function() {
 		$("#item-master-section").hide();
 		$("#edit-category-box").hide();
 		$("#edit-item-container").hide();
-		
+
 		var itemPrefix = $("#order-master-search-bar").val();
 		var itemList = "#order-master-search-bar-items";
 		loadItemsInSearchBar(itemPrefix, itemList, true);
@@ -129,7 +130,7 @@ $(document).ready(function() {
 		$("#edit-category-box").hide();
 		$("#add-category-box").hide();
 		$("#edit-item-container").hide();
-		
+
 		var categoryPrefix = $("#category-search-bar").val();
 		loadCategoryList("#search-bar-categories", true, categoryPrefix);
 		var itemPrefix = $("#item-master-item-search-bar").val();
@@ -171,7 +172,7 @@ $(document).ready(function() {
 		$("#edit-category-box").hide();
 		$("#edit-item-container").hide();
 	}
-	
+
 
 	function addCategory() {
 		$("#add-category-instructions").innerHTML = "";
@@ -194,13 +195,13 @@ $(document).ready(function() {
 				document.querySelector("#add-category-instructions").innerHTML = "Category add failed";
 			});
 	}
-	
+
 	function editCategory() {
 		$("#edit-category-instructions").innerHTML = "";
 		var categoryName = $("#edit-category-name").val();
 		var categoryCode = $("#edit-category-code").val();
 		var categoryOldName = $("#edit-category-old-name").val();
-		
+
 		$.post(
 			"edit-category",
 			{
@@ -219,13 +220,13 @@ $(document).ready(function() {
 				document.querySelector("#edit-category-instructions").innerHTML = "Category edit failed";
 			});
 	}
-	
+
 	function deleteCategory() {
 		$("#edit-category-instructions").innerHTML = "";
 		var categoryName = $("#edit-category-old-name").val();
-		
+
 		//TODO: Are you sure you want to delete the category instruction!
-		
+
 		$.post(
 			"delete-category",
 			{
@@ -272,7 +273,7 @@ $(document).ready(function() {
 				itemName: itemName,
 				itemCategory: itemCategory,
 				itemCode: itemCode,
-				itemAvailability: itemAvailability, 
+				itemAvailability: itemAvailability,
 				itemPrice: itemPrice
 			},
 			function(data, textStatus, xhr) {
@@ -283,7 +284,7 @@ $(document).ready(function() {
 				document.querySelector("#add-item-instructions").innerHTML = "Item add failed!";
 			});
 	}
-	
+
 	function editItem() {
 		$("#edit-item-instructions").innerHTML = "";
 		var itemName = $("#edit-item-name").val();
@@ -311,13 +312,13 @@ $(document).ready(function() {
 				document.querySelector("#edit-item-instructions").innerHTML = "Item edit failed!";
 			});
 	}
-	
+
 	function deleteItem() {
 		$("#edit-item-instructions").innerHTML = "";
 		var itemName = $("#edit-selected-item-name").val();
-		
+
 		//TODO: Are you sure you want to delete the category instruction!
-		
+
 		$.post(
 			"delete-item",
 			{
@@ -372,15 +373,15 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
-	function displayEditItemMenu(itemName){
+
+	function displayEditItemMenu(itemName) {
 		$("#edit-item-instructions").innerHTML = "";
 		$("#add-item-container").hide();
 		$("#add-category-box").hide();
 		$("#edit-category-box").hide();
 		$("#edit-item-container").show();
 		$("#edit-selected-item-name").val(itemName);
-		
+
 		//TODO: Handle unspecified category !
 		$.ajax({
 			url: "item-details",
@@ -398,14 +399,14 @@ $(document).ready(function() {
 		});
 	}
 
-	function displayEditCategoryMenu(categoryName){
+	function displayEditCategoryMenu(categoryName) {
 		$("#edit-category-instructions").innerHTML = "";
 		$("#add-item-container").hide();
 		$("#add-category-box").hide();
 		$("#edit-item-container").hide();
 		$("#edit-category-box").show();
 		$("#edit-category-old-name").val(categoryName);
-		
+
 		$.ajax({
 			url: "category-details",
 			type: "GET",
@@ -421,10 +422,10 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
-	function populateEditItemForm(itemJsonData){
+
+	function populateEditItemForm(itemJsonData) {
 		var editFormElements = JSON.parse(itemJsonData);
-		
+
 		$("#edit-item-name").val(editFormElements.itemName);
 		$("#edit-item-category-list").val(editFormElements.categoryName);
 		$("#edit-item-code").val(editFormElements.itemCode);
@@ -432,15 +433,15 @@ $(document).ready(function() {
 		$("#edit-item-price").val(editFormElements.itemPrice);
 		$("#edit-item-instructions").innerHTML = "";
 	}
-	
-	function populateEditCategoryForm(categoryData){
+
+	function populateEditCategoryForm(categoryData) {
 		var editCategoryElements = JSON.parse(categoryData);
 		$("#edit-category-name").val(editCategoryElements.categoryName);
 		$("#edit-category-code").val(editCategoryElements.categoryCode);
 		$("#edit-category-instructions").innerHTML = "";
 	}
-	
-	function addItemToBillSection(itemName){
+
+	function addItemToBillSection(itemName) {
 		$.ajax({
 			url: "item-details",
 			type: "GET",
@@ -456,37 +457,97 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
-	function addItemtoOrderBillSection(itemJsonData){
+
+	function addItemtoOrderBillSection(itemJsonData) {
 		var itemData = JSON.parse(itemJsonData);
 		var orderTable = document.getElementById("order-master-billing-section-table");
-		if(itemAddedAlready(orderTable, itemData.itemName)){
+		if (itemAddedAlready(orderTable, itemData.itemName)) {
 			//Item Already Added instruction.!
-			return;	
+			return;
 		}
 		//Add new row
+		var rowNo = orderTable.rows.length;
 		var newRow = orderTable.insertRow();
-		newRow.insertCell().innerHTML = orderTable.rows.length - 1;
+
+		newRow.insertCell().innerHTML = rowNo;
 		newRow.insertCell().innerHTML = itemData.itemName;
-		newRow.insertCell().innerHTML = itemData.categoryName;
-		newRow.insertCell().innerHTML = 1
+		newRow.insertCell().innerHTML = createItemQuantityCell(rowNo).outerHTML;
+		newRow.insertCell().innerHTML = itemData.itemPrice;
 		newRow.insertCell().innerHTML = itemData.itemPrice;
 		newRow.insertCell().innerHTML = "false";
+
+		$('#order-master-billItem-' + rowNo).on("input", function() {
+			var quantityElement = $('#order-master-billItem-' + rowNo);
+			if (quantityElement.val() == '') {
+				quantityElement.value = 1;
+				return;
+			}
+			updateBillPrice(rowNo, quantityElement.val(), itemData.itemPrice);
+			updateBillGrandTotal();
+		});
+		updateBillGrandTotal();
+
+		//item quantity change -> corresponding item price change, total price change.!
+		//item quantity = 0 -> item row needs to be removed, s.no's of other rows need to be changed.!
+		//item quantity = '' -> set it to 1!
 	}
-	
-	function itemAddedAlready(orderTable, itemName){
+
+	function itemAddedAlready(orderTable, itemName) {
 		var itemNameColumn = 1;
-		for(var i = 1; i < orderTable.rows.length; i++){
+		for (var i = 1; i < orderTable.rows.length; i++) {
 			//Item is present in 2nd column
-			if(orderTable.rows[i].cells[itemNameColumn].innerHTML === itemName){
+			if (orderTable.rows[i].cells[itemNameColumn].innerHTML === itemName) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	function createTableCell(content){
-		return "<td>"+content+"</td>";
+
+	function createItemQuantityCell(rowNo) {
+		var quantityCell = document.createElement('input');
+		quantityCell.type = 'number';
+		quantityCell.setAttribute("value", 1);
+		quantityCell.min = 1;
+		quantityCell.id = 'order-master-billItem-' + rowNo;
+
+		return quantityCell;
 	}
-	
+
+	function updateBillPrice(rowNo, quantity, itemPrice) {
+		var orderTable = document.getElementById("order-master-billing-section-table");
+		var amountColumn = 4;
+		var amount = itemPrice * quantity;
+
+		orderTable.rows[rowNo].cells[amountColumn].innerHTML = amount;
+	}
+
+	function updateBillGrandTotal() {
+		var grandTotal = 0;
+		var orderTable = document.getElementById("order-master-billing-section-table");
+		var quantityColumn = 2;
+		var itemPriceColumn = 3;
+
+		for (var i = 1; i < orderTable.rows.length; i++) {
+			var amount = orderTable.rows[i].cells[quantityColumn].firstChild.value * orderTable.rows[i].cells[itemPriceColumn].innerHTML;
+			grandTotal += amount;
+		}
+		$("#order-master-grand-total").text(grandTotal);
+	}
+
+	function updateBillNo() {
+		$.ajax({
+			url: "bill-number",
+			type: "GET",
+			success: function(data, textStatus, xhr) {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+						var response = xhr.responseText;
+						var billNo = JSON.parse(response).billNo;
+						$("#order-master-bill-no").text(billNo);
+					}
+				}
+			}
+		});
+	}
+
 });
