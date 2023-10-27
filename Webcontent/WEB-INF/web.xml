@@ -117,4 +117,14 @@
     <servlet-name>DeleteCategory</servlet-name>
     <url-pattern>/delete-category</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BillNumber</display-name>
+    <servlet-name>BillNumber</servlet-name>
+    <servlet-class>servlets.BillNumber</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BillNumber</servlet-name>
+    <url-pattern>/bill-number</url-pattern>
+  </servlet-mapping>
 </web-app>
