@@ -77,7 +77,8 @@
 									<div class="box1">
 										<h3>YOU & I<br>JUICE AND SANCKS</h3>
 										<br>
-										<h3>Bill No: </h3><h3 id="order-master-bill-no"></h3>
+										<h3>Bill No: </h3>
+										<h3 id="order-master-bill-no"></h3>
 										<br>
 										<table style="width:100%" id="order-master-billing-section-table">
 											<tr>
@@ -89,13 +90,17 @@
 												<th>Edit</th>
 											</tr>
 											<div id="order-section-added-items">
-												
+
 											</div>
 										</table>
 										<br>
-										<h4 >Grand total: </h4> <h4 id="order-master-grand-total">0</h4>
+										<h4>Grand total: </h4>
+										<h4 id="order-master-grand-total">0</h4>
 										<p>CGST(6%)</p>
 										<p>SGCT(6%)</P>
+										<button type="button" id="order-master-bill-clear-btn">
+											<h5>Cancel</h5>
+										</button>
 										<button>
 											<h5>Print</h5>
 										</button>
@@ -185,16 +190,17 @@
 														<input class="item-master-input" id="add-item-code">
 													</form>
 												</div>
-												
+
 												<div class="col-lg-6">
 													<form>
 														<br>
 														<label class="item-master-label">Price</label>
 
-														<input type="text" class="item-master-input" id="add-item-price" pattern="[0-9]*[.,]?[0-9]*" inputmode="decimal">
+														<input type="text" class="item-master-input" id="add-item-price"
+															pattern="[0-9]*[.,]?[0-9]*" inputmode="decimal">
 													</form>
 												</div>
-												
+
 												<div class="col-lg-6">
 													<form>
 														<br>
@@ -278,16 +284,18 @@
 														<input class="item-master-input" id="edit-item-code">
 													</form>
 												</div>
-												
+
 												<div class="col-lg-6">
 													<form>
 														<br>
 														<label class="item-master-label">Price</label>
 
-														<input type="text" class="item-master-input" id="edit-item-price" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
+														<input type="text" class="item-master-input"
+															id="edit-item-price" inputmode="decimal"
+															pattern="[0-9]*[.,]?[0-9]*">
 													</form>
 												</div>
-												
+
 												<div class="col-lg-6">
 													<form>
 														<br>

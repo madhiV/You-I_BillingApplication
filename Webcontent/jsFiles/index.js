@@ -73,6 +73,10 @@ $(document).ready(function() {
 		deleteItem();
 	});
 
+	$("#order-master-bill-clear-btn").click(function() {
+		clearOrderMasterBillEntries();
+	})
+
 	$("#order-master-search-bar").on("input", function() {
 		var itemSearchBarText = $("#order-master-search-bar").val();
 		var itemList = "#order-master-search-bar-items";
@@ -85,7 +89,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#item-master-item-search-bar").on("input", function() {
+	$("#item-master-item-search-bar").on("change", function() {
 		var itemPrefix = $("#item-master-item-search-bar").val();
 		var itemList = "#search-bar-items";
 		loadItemsInSearchBar(itemPrefix, itemList, false);
@@ -265,7 +269,6 @@ $(document).ready(function() {
 		var itemCode = $("#add-item-code").val();
 		var itemAvailability = $("#add-item-availability").val();
 		var itemPrice = $("#add-item-price").val();
-		alert(itemPrice);
 
 		$.post(
 			"add-item",
@@ -474,7 +477,7 @@ $(document).ready(function() {
 		newRow.insertCell().innerHTML = createItemQuantityCell(rowNo).outerHTML;
 		newRow.insertCell().innerHTML = itemData.itemPrice;
 		newRow.insertCell().innerHTML = itemData.itemPrice;
-		newRow.insertCell().innerHTML = "false";
+		newRow.insertCell().innerHTML = createRemoveButton(rowNo);
 
 		$('#order-master-billItem-' + rowNo).on("input", function() {
 			var quantityElement = $('#order-master-billItem-' + rowNo);
@@ -484,6 +487,11 @@ $(document).ready(function() {
 			}
 			updateBillPrice(rowNo, quantityElement.val(), itemData.itemPrice);
 			updateBillGrandTotal();
+		});
+
+		var buttonId = 'order-master-billItem-remove-btn-' + rowNo;
+		$('#' + buttonId).on("click", function() {
+			removeItemFromBill(rowNo, buttonId);
 		});
 		updateBillGrandTotal();
 
@@ -512,6 +520,7 @@ $(document).ready(function() {
 
 		return quantityCell;
 	}
+
 
 	function updateBillPrice(rowNo, quantity, itemPrice) {
 		var orderTable = document.getElementById("order-master-billing-section-table");
@@ -548,6 +557,56 @@ $(document).ready(function() {
 				}
 			}
 		});
+	}
+
+	function createRemoveButton(rowNo) {
+		var removeButton = document.createElement('input');
+		var buttonId = 'order-master-billItem-remove-btn-' + rowNo;
+		removeButton.type = 'button';
+		removeButton.setAttribute("value", 'Remove');
+		removeButton.id = buttonId;
+
+		return removeButton.outerHTML;
+	}
+
+	function removeItemFromBill(rowNo, buttonId) {
+		//remove current row
+		var orderTable = document.getElementById("order-master-billing-section-table");
+		var currentCell = $('#' + buttonId);
+		currentCell.closest('tr').remove();
+
+		updateBillGrandTotal();
+		updateBillSerialNumbers(rowNo);
+	}
+
+	function updateBillSerialNumbers(startingRowNumber) {
+		var orderTable = document.getElementById("order-master-billing-section-table");
+		var serialNumberColumn = 0;
+		var quantityColumn = 2;
+
+
+		for (var i = startingRowNumber; i < orderTable.rows.length; i++) {
+			orderTable.rows[i].cells[serialNumberColumn].innerHTML = i;
+
+			//Altering the current row's remove button id
+			var oldButtonId = 'order-master-billItem-remove-btn-' + (i + 1);
+			var newButtonId = 'order-master-billItem-remove-btn-' + i;
+			$('#' + oldButtonId).attr('id', newButtonId);
+
+			//Altering the current row's quantity id
+			var oldQuantityInputId = 'order-master-billItem-' + (i + 1);
+			var newQuantityInputId = 'order-master-billItem-' + i;
+			$('#' + oldQuantityInputId).attr('id', newQuantityInputId);
+		}
+	}
+
+	function clearOrderMasterBillEntries() {
+		var orderTable = document.getElementById("order-master-billing-section-table");
+		for (var i = orderTable.rows.length - 1; i >= 1; i--) {
+			orderTable.rows[i].remove();
+			alert(orderTable.rows[i]);
+		}
+		updateBillGrandTotal();
 	}
 
 });
