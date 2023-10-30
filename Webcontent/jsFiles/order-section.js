@@ -5,6 +5,10 @@ $(document).ready(function() {
 	$("#order-master-bill-clear-btn").click(function() {
 		clearOrderMasterBillEntries();
 	});
+	
+	$("#order-master-print-btn").click(function(){
+		printBill();
+	});
 
 	$("#order-master-search-bar").on("input", function() {
 		var itemSearchBarText = $("#order-master-search-bar").val();
@@ -178,7 +182,38 @@ function clearOrderMasterBillEntries() {
 	var orderTable = document.getElementById("order-master-billing-section-table");
 	for (var i = orderTable.rows.length - 1; i >= 1; i--) {
 		orderTable.rows[i].remove();
-		alert(orderTable.rows[i]);
 	}
 	updateBillGrandTotal();
+}
+
+function printBill(){
+	var originalContent = document.body.innerHTML;
+	var billContent = generateBillContent();
+	document.body.innerHTML = billContent;
+	window.print();
+	document.body.innerHTML = originalContent;
+	clearOrderMasterBillEntries();
+}
+
+function generateBillContent(){
+	//header
+	var billContent = "<b>---------------<br>";
+	billContent += "S.No          Item          Quantity          Rate<br>";
+	var orderTable = document.getElementById("order-master-billing-section-table");
+	for (var i = 1; i < orderTable.rows.length; i++) {
+		var sNo = orderTable.rows[i].cells[0].innerHTML;
+		var itemName = orderTable.rows[i].cells[1].innerHTML;
+		var quantity = orderTable.rows[i].cells[2].firstChild.value;
+		var rate = orderTable.rows[i].cells[3].innerHTML;
+		
+		billContent+=sNo+"    ";
+		billContent+=itemName+"    ";
+		billContent+=quantity+"    ";
+		billContent+=rate+"    <br>";
+		
+	}
+	billContent+="--------------------<br>";
+	billContent +="             Grand Total "+$("#order-master-grand-total").text();
+	billContent +="<br>-------------";
+	return billContent;
 }
