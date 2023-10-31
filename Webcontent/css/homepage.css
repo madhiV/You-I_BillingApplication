@@ -178,14 +178,14 @@ p {
 	margin-left: 80px;
 }
 
-.box1 button {
+.box1 .order-section-action-button {
 	background-color: #068FFF;
 	border-radius: 5px;
 	margin-left: 170px;
 	margin-top: 30px;
 }
 
-button h5 {
+.order-section-action-button h5 {
 	color: #fff;
 	padding: 5px;
 }
@@ -222,4 +222,45 @@ button h5 {
 
 option {
 	width: 100px;
+}
+
+/**/
+.quantityButtonContainer{
+    top: 50%;
+    left: 50%;
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 45px;
+    box-shadow: 0 20px 20px rgba(0,0,0,0.15);
+}
+
+input[type="number"]{
+    -moz-appearance: textfield;
+    text-align: center;
+    font-size: 16px;
+    border: none;
+    background-color: #ffffff;
+    color: #202030;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.order-quantity-btn{
+    color: #3264fe;
+    background-color: #ffffff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+.order-quantity-btn .decrement-btn{
+    padding: 5px 0px 5px 10px;
+    border-radius: 5px 0 0 5px;
+}
+.order-quantity-btn .increment-btn{
+    padding: 5px 0px 5px 0px;
+    border-radius: 0 5px 5px 0;
 }
