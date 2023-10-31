@@ -1,12 +1,12 @@
 $(document).ready(function() {
-	setInterval(updateBillNo, 5000);
-	
+	setInterval(updateBillNo, 2000000);
+
 	//Event listeners
 	$("#order-master-bill-clear-btn").click(function() {
 		clearOrderMasterBillEntries();
 	});
-	
-	$("#order-master-print-btn").click(function(){
+
+	$("#order-master-print-btn").click(function() {
 		printBill();
 	});
 
@@ -57,16 +57,6 @@ function addItemtoOrderBillSection(itemJsonData) {
 	newRow.insertCell().innerHTML = itemData.itemPrice;
 	newRow.insertCell().innerHTML = createRemoveButton(rowNo);
 
-	$('#order-master-billItem-' + rowNo).on("input", function() {
-		var quantityElement = $('#order-master-billItem-' + rowNo);
-		if (quantityElement.val() == '') {
-			quantityElement.value = 1;
-			return;
-		}
-		updateBillPrice(rowNo, quantityElement.val(), itemData.itemPrice);
-		updateBillGrandTotal();
-	});
-
 	var buttonId = 'order-master-billItem-remove-btn-' + rowNo;
 	$('#' + buttonId).on("click", function() {
 		removeItemFromBill(rowNo, buttonId);
@@ -100,13 +90,27 @@ function createRemoveButton(rowNo) {
 }
 
 function createItemQuantityCell(rowNo) {
-	var quantityCell = document.createElement('input');
-	quantityCell.type = 'number';
-	quantityCell.setAttribute("value", 1);
-	quantityCell.min = 1;
-	quantityCell.id = 'order-master-billItem-' + rowNo;
+	var quantityCellId = 'order-master-billItem-quantity-' + rowNo;
+	var incrementButtonId = 'order-master-item-increment-btn' + rowNo;
+	var decrementButtonId = 'order-master-item-decrement-btn' + rowNo;
 
-	return quantityCell;
+	var quantityButtonContainer = htmlToElem('<div class="quantityButtonContainer"></div>');
+	var decrementButton = htmlToElem('<button onclick="itemQuantityModifier(this, ' + rowNo + ')" class="order-quantity-btn decrement-btn" id = "' + decrementButtonId + '"> - </button>');
+	var incrementButton = htmlToElem('<button onclick="itemQuantityModifier(this, ' + rowNo + ')" class="order-quantity-btn increment-btn" id = "' + incrementButtonId + '"> + </button>');
+	var inputBox = htmlToElem('<input type="number" min="1" max="100" step="1" value="1" id=' + quantityCellId + " readonly>");
+
+	quantityButtonContainer.appendChild(decrementButton);
+	quantityButtonContainer.appendChild(inputBox);
+	quantityButtonContainer.appendChild(incrementButton);
+
+	return quantityButtonContainer;
+}
+
+function htmlToElem(html) {
+	let temp = document.createElement('template');
+	html = html.trim(); // Never return a space text node as a result
+	temp.innerHTML = html;
+	return temp.content.firstChild;
 }
 
 function removeItemFromBill(rowNo, buttonId) {
@@ -119,10 +123,16 @@ function removeItemFromBill(rowNo, buttonId) {
 	updateBillSerialNumbers(rowNo);
 }
 
-function updateBillPrice(rowNo, quantity, itemPrice) {
+function updateBillPrice(rowNo, quantity) {
 	var orderTable = document.getElementById("order-master-billing-section-table");
+	var quantityColumn = 2;
+	var quantityCellContainer = orderTable.rows[rowNo].cells[quantityColumn].firstChild;
+	var quantityElement = quantityCellContainer.children[1];
+	var quantity = Number(quantityElement.value);
+
+	var itemPrice = Number(orderTable.rows[rowNo].cells[3].innerHTML);
+	var amount = quantity * itemPrice;
 	var amountColumn = 4;
-	var amount = itemPrice * quantity;
 
 	orderTable.rows[rowNo].cells[amountColumn].innerHTML = amount;
 }
@@ -149,7 +159,6 @@ function updateBillSerialNumbers(startingRowNumber) {
 	var serialNumberColumn = 0;
 	var quantityColumn = 2;
 
-
 	for (var i = startingRowNumber; i < orderTable.rows.length; i++) {
 		orderTable.rows[i].cells[serialNumberColumn].innerHTML = i;
 
@@ -157,11 +166,29 @@ function updateBillSerialNumbers(startingRowNumber) {
 		var oldButtonId = 'order-master-billItem-remove-btn-' + (i + 1);
 		var newButtonId = 'order-master-billItem-remove-btn-' + i;
 		$('#' + oldButtonId).attr('id', newButtonId);
+		$('#' + newButtonId).on("click", function() {
+			removeItemFromBill(i, newButtonId);
+		});
 
-		//Altering the current row's quantity id
-		var oldQuantityInputId = 'order-master-billItem-' + (i + 1);
-		var newQuantityInputId = 'order-master-billItem-' + i;
-		$('#' + oldQuantityInputId).attr('id', newQuantityInputId);
+		//Altering the current row's quantity, increment and decrement button ids.
+		var quantityCellContainer = orderTable.rows[i].cells[quantityColumn].firstChild;
+		var decrementButton = quantityCellContainer.children[0];
+		var quantityElement = quantityCellContainer.children[1];
+		var incrementButton = quantityCellContainer.children[2];
+
+		var newQuantityInputId = 'order-master-billItem-quantity-' + i;
+		var incrementButtonId = 'order-master-item-increment-btn' + i;
+		var decrementButtonId = 'order-master-item-decrement-btn' + i;
+
+
+		decrementButton.id = decrementButtonId;
+		quantityElement.id = newQuantityInputId;
+		incrementButton.id = incrementButtonId;
+
+		//changing onclick functionality
+		var newOnclickFunction = "itemQuantityModifier(this, " + i + ")";
+		decrementButton.setAttribute("onclick", newOnclickFunction);
+		incrementButton.setAttribute("onclick", newOnclickFunction);
 	}
 }
 
@@ -172,7 +199,12 @@ function updateBillGrandTotal() {
 	var itemPriceColumn = 3;
 
 	for (var i = 1; i < orderTable.rows.length; i++) {
-		var amount = orderTable.rows[i].cells[quantityColumn].firstChild.value * orderTable.rows[i].cells[itemPriceColumn].innerHTML;
+		var quantityCellContainer = orderTable.rows[i].cells[quantityColumn].firstChild;
+		var quantityElement = quantityCellContainer.children[1];
+		var itemPriceElement = orderTable.rows[i].cells[itemPriceColumn];
+		var quantity = quantityElement.value;
+		var itemPrice = itemPriceElement.innerHTML;;
+		var amount = quantity * itemPrice;
 		grandTotal += amount;
 	}
 	$("#order-master-grand-total").text(grandTotal);
@@ -186,7 +218,7 @@ function clearOrderMasterBillEntries() {
 	updateBillGrandTotal();
 }
 
-function printBill(){
+function printBill() {
 	var originalContent = document.body.innerHTML;
 	var billContent = generateBillContent();
 	document.body.innerHTML = billContent;
@@ -195,7 +227,7 @@ function printBill(){
 	clearOrderMasterBillEntries();
 }
 
-function generateBillContent(){
+function generateBillContent() {
 	//header
 	var billContent = "<b>---------------<br>";
 	billContent += "S.No          Item          Quantity          Rate<br>";
@@ -205,15 +237,31 @@ function generateBillContent(){
 		var itemName = orderTable.rows[i].cells[1].innerHTML;
 		var quantity = orderTable.rows[i].cells[2].firstChild.value;
 		var rate = orderTable.rows[i].cells[3].innerHTML;
-		
-		billContent+=sNo+"    ";
-		billContent+=itemName+"    ";
-		billContent+=quantity+"    ";
-		billContent+=rate+"    <br>";
-		
+
+		billContent += sNo + "    ";
+		billContent += itemName + "    ";
+		billContent += quantity + "    ";
+		billContent += rate + "    <br>";
+
 	}
-	billContent+="--------------------<br>";
-	billContent +="             Grand Total "+$("#order-master-grand-total").text();
-	billContent +="<br>-------------";
+	billContent += "--------------------<br>";
+	billContent += "             Grand Total " + $("#order-master-grand-total").text();
+	billContent += "<br>-------------";
 	return billContent;
+}
+
+function itemQuantityModifier(btn, rowNo) {
+	var quantityCellId = '#order-master-billItem-quantity-' + rowNo;
+	const buttonId = btn.getAttribute("id");
+	var quantityCell = $(quantityCellId);
+
+	let oldValue = Number(quantityCell.val());
+	let newValue = (buttonId.includes("increment")) ? oldValue + 1 : oldValue - 1;
+
+	if (newValue >= 1) {
+		quantityCell.val(newValue);
+	}
+
+	updateBillPrice(rowNo, quantityCell.val());
+	updateBillGrandTotal();
 }
