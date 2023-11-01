@@ -153,7 +153,6 @@ function updateBillNo() {
 	});
 }
 
-
 function updateBillSerialNumbers(startingRowNumber) {
 	var orderTable = document.getElementById("order-master-billing-section-table");
 	var serialNumberColumn = 0;

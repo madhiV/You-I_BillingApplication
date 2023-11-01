@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utility.DatabaseConnection;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -78,8 +80,7 @@ public class UserValidation extends HttpServlet {
 			return false;
 		}
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("select * from user where email = '"+email+"';");
 			if(!rs.next()) {
 				return false;

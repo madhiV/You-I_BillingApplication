@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utility.DatabaseConnection;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -50,8 +52,7 @@ public class EditCategory extends HttpServlet {
 	
 	private boolean editCategory(String categoryName, String categoryCode, String categoryOldName) {
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321"); 
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			st.executeUpdate("update category set categoryName = '"+categoryName+"', categoryCode = '"+categoryCode+"' where categoryName = '"+categoryOldName+"';");
 			return true;
 		}

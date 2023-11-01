@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utility.DatabaseConnection;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -50,8 +52,7 @@ public class DeleteCategory extends HttpServlet {
 		//TODO: If some items are assigned to categoryName, we should set the items belonging to the current category
 		//to unspecified category first before deletion...
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321"); 
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			st.executeUpdate("delete from category where categoryName = '"+categoryName+"';");
 			return true;
 		}
