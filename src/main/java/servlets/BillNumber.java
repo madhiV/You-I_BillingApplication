@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utility.DatabaseConnection;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -33,8 +35,7 @@ public class BillNumber extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("select count(billNo) from bill;");
 			int billNo = rs.getRow() + 1;
 			out.print("{\"billNo\": "+billNo+"}");

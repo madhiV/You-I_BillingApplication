@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
+import utility.DatabaseConnection;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,8 +37,7 @@ public class ItemDetails extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321"); 
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("select categoryId, itemCode, availability, price from item where itemName ='"+itemName+"';");
 			rs.next();
 			
@@ -69,8 +69,7 @@ public class ItemDetails extends HttpServlet {
 	
 	private String getCategoryName(int categoryId) {
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("select categoryName from category where categoryId ="+categoryId+";");
 			rs.next();
 			return rs.getString(1);

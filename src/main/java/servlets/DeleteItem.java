@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utility.DatabaseConnection;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -48,8 +50,7 @@ public class DeleteItem extends HttpServlet {
 
 	private boolean deleteItem(String itemName) {
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321"); 
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			st.executeUpdate("delete from item where itemName = '"+itemName+"';");
 			return true;
 		}

@@ -1,14 +1,12 @@
 package servlets;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utility.DatabaseConnection;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
@@ -50,8 +48,7 @@ public class AddCategory extends HttpServlet {
 	
 	private boolean addCategory(String categoryName, String categoryCode) {
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321"); 
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			st.executeUpdate("insert into category values(null, '"+categoryName+"', '"+categoryCode+"');");
 			return true;
 		}

@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utility.DatabaseConnection;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -55,8 +57,7 @@ public class EditItem extends HttpServlet {
 	private boolean editItem(String itemName, String itemCategory, String itemCode, String itemAvailability, String oldItemName, float itemPrice) {
 		try {
 			int categoryId = getCategoryId(itemCategory);
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			st.executeUpdate("update item set itemName = '"+itemName+"', itemCode = "+itemCode+", categoryId = "+categoryId+", availability = "+itemAvailability+", price = "+itemPrice+" where itemName = '"+oldItemName+"';");
 			return true;
 		}
@@ -68,8 +69,7 @@ public class EditItem extends HttpServlet {
 	
 	private int getCategoryId(String categoryName) {
 		try {
-			Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/YouAndI_BillingApp","youandi_dev","developers_321");
-			Statement st = con.createStatement();
+			Statement st = DatabaseConnection.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("select categoryId from category where categoryName='"+categoryName+"';");
 			//TODO: 
 			//If category name is not present condition
