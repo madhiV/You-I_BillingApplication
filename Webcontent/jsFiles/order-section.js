@@ -52,15 +52,14 @@ function addItemtoOrderBillSection(itemJsonData) {
 
 	newRow.insertCell().innerHTML = rowNo;
 	newRow.insertCell().innerHTML = itemData.itemName;
-	newRow.insertCell().innerHTML = createItemQuantityCell(rowNo).outerHTML;
+	newRow.insertCell().innerHTML = createItemQuantityCell(rowNo);
 	newRow.insertCell().innerHTML = itemData.itemPrice;
 	newRow.insertCell().innerHTML = itemData.itemPrice;
 	newRow.insertCell().innerHTML = createRemoveButton(rowNo);
 
 	var buttonId = 'order-master-billItem-remove-btn-' + rowNo;
-	$('#' + buttonId).on("click", function() {
-		removeItemFromBill(rowNo, buttonId);
-	});
+	var removeItemFunction = "removeItemFromBill(" + rowNo + ",'" + buttonId + "'); "
+	$('#' + buttonId).attr("onclick", removeItemFunction);
 	updateBillGrandTotal();
 
 	//item quantity change -> corresponding item price change, total price change.!
@@ -103,7 +102,7 @@ function createItemQuantityCell(rowNo) {
 	quantityButtonContainer.appendChild(inputBox);
 	quantityButtonContainer.appendChild(incrementButton);
 
-	return quantityButtonContainer;
+	return quantityButtonContainer.outerHTML;
 }
 
 function htmlToElem(html) {
@@ -120,7 +119,7 @@ function removeItemFromBill(rowNo, buttonId) {
 	currentCell.closest('tr').remove();
 
 	updateBillGrandTotal();
-	updateBillSerialNumbers(rowNo);
+	updateBillSection(rowNo);
 }
 
 function updateBillPrice(rowNo, quantity) {
@@ -153,7 +152,7 @@ function updateBillNo() {
 	});
 }
 
-function updateBillSerialNumbers(startingRowNumber) {
+function updateBillSection(startingRowNumber) {
 	var orderTable = document.getElementById("order-master-billing-section-table");
 	var serialNumberColumn = 0;
 	var quantityColumn = 2;
@@ -165,9 +164,8 @@ function updateBillSerialNumbers(startingRowNumber) {
 		var oldButtonId = 'order-master-billItem-remove-btn-' + (i + 1);
 		var newButtonId = 'order-master-billItem-remove-btn-' + i;
 		$('#' + oldButtonId).attr('id', newButtonId);
-		$('#' + newButtonId).on("click", function() {
-			removeItemFromBill(i, newButtonId);
-		});
+		var newRemoveItemFunction = "removeItemFromBill(" + i + ",'" + newButtonId + "'); "
+		$('#' + newButtonId).attr("onclick", newRemoveItemFunction);
 
 		//Altering the current row's quantity, increment and decrement button ids.
 		var quantityCellContainer = orderTable.rows[i].cells[quantityColumn].firstChild;
@@ -186,8 +184,8 @@ function updateBillSerialNumbers(startingRowNumber) {
 
 		//changing onclick functionality
 		var newOnclickFunction = "itemQuantityModifier(this, " + i + ")";
-		decrementButton.setAttribute("onclick", newOnclickFunction);
-		incrementButton.setAttribute("onclick", newOnclickFunction);
+		$("#" + decrementButtonId).attr("onclick", newOnclickFunction);
+		$("#" + incrementButtonId).attr("onclick", newOnclickFunction);
 	}
 }
 
